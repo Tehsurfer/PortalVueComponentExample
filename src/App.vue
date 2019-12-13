@@ -8,7 +8,7 @@
     </div>
     
     <el-tabs :tab-position="tabPosition" style="top:10%;height: 90%;">
-      <el-tab-pane v-for="item in displays" :key="item.ref" :label="item.ref" style="height:100%">
+      <el-tab-pane v-for="(item, i) in displays" :key="`${i}-${item.ref}`" :label="item.ref" style="height:100%">
         <ScaffoldVuer v-if="item.type==='scaffold'" :url="item.url" v-on:scaffold-selected="ScaffoldSelected" :ref="item.ref" style="height:100%"/>
         <PlotVuer v-if="item.type==='plot'" :url="item.url" :name="item.ref" style="height:100%"/>
       </el-tab-pane>
@@ -43,7 +43,7 @@ export default {
     RemoveModel: function() {
       var currentLength = this.displays.length;
       if (currentLength > 0)
-        var removed = this.displays.shift()
+        var removed = this.displays.pop()
         if (removed.type === 'scaffold'){
           this.scaffoldsArray.unshift(removed)
         }
